@@ -1,0 +1,78 @@
+version: '3.8'
+
+volumes:
+  redis_storage:
+
+x-shared: &shared
+  restart: always
+  # image: n8nio/n8n:1.97.1
+  image: n8nio/n8n
+  environment:
+    - DB_TYPE=postgresdb
+    - DB_POSTGRESDB_HOST=${DB_POSTGRESDB_HOST}
+    - DB_POSTGRESDB_PORT=${DB_POSTGRESDB_PORT}
+    - DB_POSTGRESDB_DATABASE=${DB_POSTGRESDB_DATABASE}
+    - DB_POSTGRESDB_USER=${DB_POSTGRESDB_USER}
+    - DB_POSTGRESDB_PASSWORD=${DB_POSTGRESDB_PASSWORD}
+    - DB_POSTGRESDB_SSL_CA_FILE=/ca.pem
+    - EXECUTIONS_MODE=queue
+    - QUEUE_BULL_REDIS_HOST=redis
+    - QUEUE_HEALTH_CHECK_ACTIVE=true
+    - N8N_SECURE_COOKIE=false
+    - N8N_ENCRYPTION_KEY=${ENCRYPTION_KEY}
+    - NODE_FUNCTION_ALLOW_EXTERNAL=entities
+    - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+    - N8N_RUNNERS_ENABLED=true
+    # - OFFLOAD_MANUAL_EXECUTIONS_TO_WORKERS=true
+
+  volumes:
+    - /root/aiven/ca.pem:/ca.pem
+  networks:
+      - internal
+  depends_on:
+    redis:
+      condition: service_healthy
+
+
+services:
+  redis:
+    image: redis:6-alpine
+    restart: always
+    volumes:
+      - redis_storage:/data
+    networks:
+      - internal
+    logging:
+         driver: none
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  n8n:
+    <<: *shared
+
+  n8n-worker:
+    <<: *shared
+    command: worker
+    deploy:
+      replicas: 1
+    depends_on:
+      - n8n
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: always
+    command: tunnel --config /argo.yml run
+    volumes:
+    - /root/cloudflare/argo.yml:/argo.yml
+    - /root/cloudflare/argo.json:/argo.json
+
+    networks:
+      - internal
+
+      
+networks:
+  internal:
+    driver: bridge
