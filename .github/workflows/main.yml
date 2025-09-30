@@ -2,6 +2,8 @@ name: Run stack
 
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [deploy-job]
 
 jobs:
   docker-compose:
