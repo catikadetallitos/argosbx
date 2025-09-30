@@ -26,7 +26,7 @@ x-shared: &shared
     # - OFFLOAD_MANUAL_EXECUTIONS_TO_WORKERS=true
 
   volumes:
-    - ./aiven/ca.pem:/ca.pem
+    - /home/runner/aiven/ca.pem:/ca.pem
   networks:
       - internal
   depends_on:
@@ -66,8 +66,8 @@ services:
     restart: always
     command: tunnel --config /argo.yml run
     volumes:
-    - ./cloudflare/argo.yml:/argo.yml
-    - ./cloudflare/argo.json:/argo.json
+    - /home/runner/cloudflare/argo.yml:/argo.yml
+    - /home/runner/cloudflare/argo.json:/argo.json
 
     networks:
       - internal
