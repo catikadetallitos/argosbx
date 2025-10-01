@@ -31,10 +31,6 @@ jobs:
           echo "${{ secrets.CA_PEM_B64 }}" | base64 -d > ~/aiven/ca.pem
           echo "${{ secrets.ARGO_YML_B64 }}" | base64 -d > ~/cloudflare/argo.yml
           echo "${{ secrets.ARGO_JSON_B64 }}" | base64 -d > ~/cloudflare/argo.json
-
-      - name: Run docker-compose
-        run: |
-          docker-compose -f docker-compose.yml up -d
           
       - name: Delete old workflow runs
         uses: MajorScruffy/delete-old-workflow-runs@v0.3.0
@@ -43,10 +39,8 @@ jobs:
         with:
           repository: ${{ github.repository }}
           older-than-seconds: 3600
-          
-      - name: Giữ job chạy
+
+      - name: Run docker-compose
         run: |
-          while true; do
-            echo "[$(date)] Use Ctrl+C in workflow to terminate"
-            sleep 300
-          done
+          docker-compose -f docker-compose.yml up
+          
