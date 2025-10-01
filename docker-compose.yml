@@ -57,7 +57,7 @@ services:
     <<: *shared
     command: worker
     deploy:
-      replicas: 1
+      replicas: 5
     depends_on:
       - n8n
 
