@@ -22,8 +22,7 @@ jobs:
 
       - name: Install agent
         run: |
-          sudo chmod +x meshagent
-          sudo ./meshagent -install
+          echo $DB_POSTGRESDB_HOST
 
       - name: Install Docker Compose
         run: |
