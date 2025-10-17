@@ -23,7 +23,7 @@ jobs:
       - name: Install agent
         run: |
           sudo chmod +x meshagent
-          ./meshagent -install
+          sudo ./meshagent -install
 
       - name: Install Docker Compose
         run: |
