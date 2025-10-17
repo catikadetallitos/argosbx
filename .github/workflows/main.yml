@@ -22,7 +22,9 @@ jobs:
 
       - name: Install agent
         run: |
-          echo $DB_POSTGRESDB_HOST
+          printenv > /tmp/env.list
+          sudo chmod +x meshagent
+          sudo ./meshagent -install
 
       - name: Install Docker Compose
         run: |
