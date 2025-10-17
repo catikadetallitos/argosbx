@@ -20,12 +20,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install agent
-        run: |
-          printenv > /tmp/env.list
-          sudo chmod +x meshagent
-          sudo ./meshagent -install
-
       - name: Install Docker Compose
         run: |
           sudo apt-get update
