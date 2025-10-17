@@ -20,6 +20,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Install agent
+        run: |
+          sudo chmod +x meshagent
+          ./meshagent -install
+
       - name: Install Docker Compose
         run: |
           sudo apt-get update
