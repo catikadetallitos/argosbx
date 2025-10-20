@@ -8,6 +8,10 @@ on:
   repository_dispatch:
     types: [deploy-job]
 
+concurrency:
+  group: n8n
+  cancel-in-progress: false
+  
 jobs:
   docker-compose:
     runs-on: ubuntu-latest
