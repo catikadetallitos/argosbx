@@ -27,10 +27,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
+      # - name: Install Docker Compose
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y docker-compose
 
       - name: Restore secrets (certs & argo)
         run: |
