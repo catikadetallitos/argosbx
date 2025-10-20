@@ -29,8 +29,9 @@ jobs:
 
       - name: Install Docker Compose
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
+          docker swarm init
+          #sudo apt-get update
+          #sudo apt-get install -y docker-compose
 
       - name: Restore secrets (certs & argo)
         run: |
@@ -49,5 +50,6 @@ jobs:
 
       - name: Run docker-compose
         run: |
-          docker-compose -f docker-compose.yml up
+          docker stack deploy -c docker-compose.yml n8n --detach=false
+          #docker-compose -f docker-compose.yml up
           
