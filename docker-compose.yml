@@ -30,8 +30,7 @@ x-shared: &shared
   networks:
       - internal
   depends_on:
-    redis:
-      condition: service_healthy
+  - redis
 
 
 services:
