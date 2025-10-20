@@ -30,7 +30,8 @@ x-shared: &shared
   networks:
       - internal
   depends_on:
-  - redis
+    redis:
+      condition: service_healthy
 
 
 services:
@@ -74,4 +75,4 @@ services:
       
 networks:
   internal:
-    driver: overlay
+    driver: bridge
