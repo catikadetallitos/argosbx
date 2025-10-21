@@ -50,5 +50,5 @@ jobs:
 
       - name: Run docker-compose
         run: |
-          docker-compose -f docker-compose.yml up --scale n8n-worker=5
+          docker compose -f docker-compose.yml up --scale n8n-worker=5
           
