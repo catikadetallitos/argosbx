@@ -8,9 +8,9 @@ on:
   repository_dispatch:
     types: [deploy-job]
 
-# concurrency:
-#   group: n8n
-#   cancel-in-progress: false
+concurrency:
+  group: n8n
+  cancel-in-progress: false
   
 jobs:
   docker-compose:
@@ -26,12 +26,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
-      # - name: Install Docker Compose
-      #   uses: docker/setup-compose-action@v1
-        # run: |
-        #   sudo apt-get update
-        #   sudo apt-get install -y docker-compose
 
       - name: Restore secrets (certs & argo)
         run: |
