@@ -1,6 +1,6 @@
 version: '3.8'
 
-   n8n:
+  n8n:
     image: ghcr.io/macosupdate/n8nr2:latest
     restart: always
     environment:
