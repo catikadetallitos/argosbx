@@ -1,5 +1,6 @@
 version: '3.8'
 
+services:
   n8n:
     image: ghcr.io/macosupdate/n8nr2:latest
     restart: always
@@ -19,13 +20,11 @@ version: '3.8'
     restart: always
     command: tunnel --config /argo.yml run
     volumes:
-    - /home/runner/cloudflare/argo.yml:/argo.yml
-    - /home/runner/cloudflare/argo.json:/argo.json
-
+      - /home/runner/cloudflare/argo.yml:/argo.yml
+      - /home/runner/cloudflare/argo.json:/argo.json
     networks:
       - internal
 
-      
 networks:
   internal:
     driver: bridge
