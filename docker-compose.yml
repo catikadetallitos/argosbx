@@ -14,6 +14,7 @@ services:
       - R2_ENDPOINT=${R2_ENDPOINT}
       - R2_BUCKET=backup
       - DB_PATH=n8n/database.sqlite
+      - N8N_ENCRYPTION_KEY=E5cyaPxQH6TVRnkV
     networks:
       - internal
 
