@@ -1,8 +1,8 @@
 name: Run stack
 
 on:
-  schedule:
-    - cron: '0 0,6,12,18 * * *'  # 
+  # schedule:
+  #   - cron: '0 0,6,12,18 * * *'  
     
   workflow_dispatch:
   repository_dispatch:
@@ -53,5 +53,17 @@ jobs:
 
       - name: Run docker-compose
         run: |
-          docker compose -f docker-compose.yml up
+          docker compose -f docker-compose.yml up -d
+
+      - name: Do your work
+        run: |
+          echo "Running job at $(date)"
+          sleep $((5 * 3600)) 
+      - name: Trigger next run
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/dispatches \
+            -d '{"event_type":"deploy-job"}'
           
