@@ -53,7 +53,7 @@ jobs:
       - name: Do your work
         run: |
           echo "Running job at $(date)"
-          sleep $((5 * 3600)) 
+          sleep $((5.5 * 3600)) 
       - name: Trigger next run
         run: |
           curl -X POST \
