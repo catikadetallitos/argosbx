@@ -1,0 +1,65 @@
+version: "3.9"
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    user: "1000:1000"
+    environment:
+      - DB_TYPE=sqlite
+      - DB_SQLITE_VACUUM_ON_STARTUP=true
+      - DB_SQLITE_POOL_SIZE=3
+      # - N8N_RUNNERS_ENABLED=true
+      - N8N_LOG_LEVEL=info
+      - EXECUTIONS_DATA_MAX_AGE=72
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_PERSONALIZATION_ENABLED=false
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_HIRING_BANNER_ENABLED=false
+      - EXECUTIONS_DATA_SAVE_ON_SUCCESS=none
+      - EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=false
+      - EXECUTIONS_DATA_SAVE_ON_ERROR=none
+      - N8N_SECURE_COOKIE=false
+      - NODE_ENV=production
+      - EXECUTIONS_DATA_PRUNE=true
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
+      - N8N_GIT_NODE_DISABLE_BARE_REPOS=true
+      - N8N_ENCRYPTION_KEY=E5cyaPxQH6TVRnkV
+      - N8N_SECURE_COOKIE=false
+    restart: always
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      litestream:
+        condition: service_healthy
+
+
+  litestream:
+    image: litestream/litestream
+    user: "1000:1000"
+    entrypoint: ["/bin/sh", "-c"]
+    # Timeout of health check will need to depend on size of db, and speed of network to host.
+    healthcheck:
+      test: /usr/local/bin/litestream restore -if-db-not-exists -if-replica-exists /home/node/.n8n/database.sqlite
+      timeout: 30m
+      retries: 1
+    command:
+       - /usr/local/bin/litestream replicate
+    volumes:
+    - n8n_data:/home/node/.n8n
+    - ./litestream.yml:/etc/litestream.yml:ro
+    environment:
+      - R2_ACCESS_KEY=${R2_ACCESS_KEY}
+      - R2_SECRET_KEY=${R2_SECRET_KEY}
+      - R2_ENDPOINT=${R2_ENDPOINT}
+      - R2_BUCKET=backup
+      - DB_PATH=n8n/database.sqlite
+
+  cloudflared:
+      image: cloudflare/cloudflared:latest
+      restart: always
+      command: tunnel --config /argo.yml run
+      volumes:
+        - /home/runner/cloudflare/argo.yml:/argo.yml
+        - /home/runner/cloudflare/argo.json:/argo.json
+volumes:
+  n8n_data:
