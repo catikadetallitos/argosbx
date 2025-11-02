@@ -40,7 +40,7 @@ jobs:
 
       - name: Run docker-compose
         run: |
-          docker compose -f docker-compose.yml up
+          docker compose -f docker-compose.yml up -d
 
       - name: Delete old workflow runs
         uses: MajorScruffy/delete-old-workflow-runs@v0.3.0
