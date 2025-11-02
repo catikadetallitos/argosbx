@@ -1,0 +1,12 @@
+dbs:
+  - path: /home/node/.n8n/database.sqlite
+    replicas:
+      - url: s3://${R2_BUCKET}/${DB_PATH}
+        region: auto
+        endpoint: ${R2_ENDPOINT}
+        access-key-id: ${R2_ACCESS_KEY}
+        secret-access-key: ${R2_SECRET_KEY}
+        sync-interval: 5m                 # đồng bộ 5 phút/lần (thay vì 1 giây)
+        snapshot-interval: 12h            # tạo snapshot mới mỗi 12h
+        retention: 3d                     # giữ snapshot trong 3 ngày
+        retention-check-interval: 6h      # mỗi 6h dọn snapshot cũ
