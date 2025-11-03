@@ -7,6 +7,6 @@ dbs:
         access-key-id: ${R2_ACCESS_KEY}
         secret-access-key: ${R2_SECRET_KEY}
         sync-interval: 5m                 # đồng bộ 5 phút/lần (thay vì 1 giây)
-        snapshot-interval: 12h            # tạo snapshot mới mỗi 12h
+        snapshot-interval: 1h            # tạo snapshot mới mỗi 12h
         retention: 24h                     # giữ snapshot trong 3 ngày
         retention-check-interval: 6h      # mỗi 6h dọn snapshot cũ
