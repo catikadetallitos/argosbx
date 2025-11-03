@@ -8,9 +8,9 @@ on:
   repository_dispatch:
     types: [deploy-job]
 
-concurrency:
-  group: n8n
-  cancel-in-progress: false
+# concurrency:
+#   group: n8n
+#   cancel-in-progress: false
   
 jobs:
   docker-compose:
@@ -45,6 +45,9 @@ jobs:
       - name: Run docker-compose
         run: |
           docker compose -f n8n.yml up -d
+
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: Delete old workflow runs
         uses: MajorScruffy/delete-old-workflow-runs@v0.3.0
