@@ -37,10 +37,10 @@ jobs:
           echo "${{ secrets.ARGO_YML_B64 }}" | base64 -d > ~/cloudflare/argo.yml
           echo "${{ secrets.ARGO_JSON_B64 }}" | base64 -d > ~/cloudflare/argo.json
 
-      - name: Cache Docker images.
-        uses: AndreKurait/docker-cache@0.6.0
-        with:
-          key: docker-${{ runner.os }}-${{ hashFiles('n8n.yml') }}
+      # - name: Cache Docker images.
+      #   uses: AndreKurait/docker-cache@0.6.0
+      #   with:
+      #     key: docker-${{ runner.os }}-${{ hashFiles('n8n.yml') }}
 
       - name: Run docker-compose
         run: |
