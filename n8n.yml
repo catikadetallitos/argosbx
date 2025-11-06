@@ -53,7 +53,7 @@ services:
       - DB_PATH=n8n/database.sqlite
 
   cloudflared:
-      image: cloudflare/cloudflared:latest
+      image: ghcr.io/macosupdate/cloudflared:latest
       restart: always
       command: tunnel --config /argo.yml run
       volumes:
