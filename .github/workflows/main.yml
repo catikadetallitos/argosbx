@@ -36,6 +36,12 @@ jobs:
           echo "${{ secrets.CA_PEM_B64 }}" | base64 -d > ~/aiven/ca.pem
           echo "${{ secrets.ARGO_YML_B64 }}" | base64 -d > ~/cloudflare/argo.yml
           echo "${{ secrets.ARGO_JSON_B64 }}" | base64 -d > ~/cloudflare/argo.json
+      
+      - name: Download previous DB
+        uses: actions/download-artifact@v5
+        with:
+          name: db
+          path: /home/runner/db
 
       # - name: Cache Docker images.
       #   uses: AndreKurait/docker-cache@0.6.0
@@ -63,6 +69,15 @@ jobs:
         run: |
           echo "Running job at $(date)"
           sleep 5.9h
+          
+      - name: backup DB
+        uses: actions/upload-artifact@v4
+        with:
+          name: db
+          path: /home/runner/db
+          retention-days: 90
+          compression-level: 6
+          
       - name: Trigger next run
         run: |
           curl -X POST \
