@@ -73,13 +73,13 @@ jobs:
           echo "Running job at $(date)"
           sleep 5.8h
           
-      - name: backup DB
-        uses: actions/upload-artifact@v4
-        with:
-          name: db
-          path: /home/runner/db
-          retention-days: 90
-          compression-level: 6
+      # - name: backup DB
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: db
+      #     path: /home/runner/db
+      #     retention-days: 90
+      #     compression-level: 6
           
       - name: Trigger next run
         run: |
