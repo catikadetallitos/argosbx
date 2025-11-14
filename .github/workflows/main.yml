@@ -53,7 +53,7 @@ jobs:
         run: |
           docker compose -f n8n.yml up -d
           docker volume ls
-          docker volume inspect n8n_data
+          docker volume inspect argosbx_n8n_data
 
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.12.1
