@@ -25,7 +25,8 @@ services:
       - N8N_SECURE_COOKIE=false
     restart: always
     volumes:
-      - /home/runner/db:/home/node/.n8n
+      # - /home/runner/db:/home/node/.n8n
+      - n8n_data:/home/node/.n8n
     depends_on:
       litestream:
         condition: service_healthy
@@ -44,7 +45,8 @@ services:
     command:
        - sleep 600 && /usr/local/bin/litestream replicate
     volumes:
-    - /home/runner/db:/home/node/.n8n
+    # - /home/runner/db:/home/node/.n8n
+    - n8n_data:/home/node/.n8n
     - ./litestream.yml:/etc/litestream.yml:ro
     environment:
       - R2_ACCESS_KEY=${R2_ACCESS_KEY}
