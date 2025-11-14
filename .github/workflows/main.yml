@@ -41,7 +41,7 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           name: db
-          path: /home/runner/db
+          path: /var/lib/docker/volumes/argosbx_n8n_data/_data
         continue-on-error: true
 
       # - name: Cache Docker images.
@@ -52,8 +52,6 @@ jobs:
       - name: Run docker-compose
         run: |
           docker compose -f n8n.yml up -d
-          docker volume ls
-          docker volume inspect argosbx_n8n_data
 
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.12.1
@@ -73,13 +71,13 @@ jobs:
           echo "Running job at $(date)"
           sleep 5.8h
           
-      # - name: backup DB
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: db
-      #     path: /home/runner/db
-      #     retention-days: 90
-      #     compression-level: 6
+      - name: backup DB
+        uses: actions/upload-artifact@v4
+        with:
+          name: db
+          path: /var/lib/docker/volumes/argosbx_n8n_data/_data
+          retention-days: 90
+          compression-level: 6
           
       - name: Trigger next run
         run: |
