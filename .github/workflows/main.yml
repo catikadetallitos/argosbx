@@ -32,7 +32,7 @@ jobs:
 
       - name: Restore secrets (certs & argo)
         run: |
-          mkdir -p ~/aiven ~/cloudflare
+          mkdir -p ~/aiven ~/cloudflare ~/db
           echo "${{ secrets.CA_PEM_B64 }}" | base64 -d > ~/aiven/ca.pem
           echo "${{ secrets.ARGO_YML_B64 }}" | base64 -d > ~/cloudflare/argo.yml
           echo "${{ secrets.ARGO_JSON_B64 }}" | base64 -d > ~/cloudflare/argo.json
