@@ -56,6 +56,7 @@ jobs:
 
       - name: Run docker-compose
         run: |
+          sudo chmod -R 777 /home/runner/db
           docker compose -f n8n.yml up
 
       - name: Cancel Previous Runs
