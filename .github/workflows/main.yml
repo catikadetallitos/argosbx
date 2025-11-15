@@ -43,6 +43,7 @@ jobs:
           name: db
           # path: /var/lib/docker/volumes/argosbx_n8n_data/_data
           path: /home/runner/db
+          github-token: ${{ secrets.GH_TOKEN }}
         continue-on-error: true
 
       # - name: Cache Docker images.
