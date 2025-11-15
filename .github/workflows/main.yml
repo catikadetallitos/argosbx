@@ -82,8 +82,9 @@ jobs:
         with:
           name: db
           # path: /var/lib/docker/volumes/argosbx_n8n_data/_data
-          path: /home/runner/db
-                !/home/runner/db/config/**         
+          path: |
+            /home/runner/db/**
+            !/home/runner/db/config/**        
           retention-days: 90
           compression-level: 6
           continue-on-error: true
