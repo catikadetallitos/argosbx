@@ -70,7 +70,7 @@ jobs:
       - name: Do your work
         run: |
           echo "Running job at $(date)"
-          sleep 5.8h
+          sleep 10m
           
       - name: backup DB
         uses: actions/upload-artifact@v4
