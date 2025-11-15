@@ -80,6 +80,7 @@ jobs:
           path: /home/runner/db
           retention-days: 90
           compression-level: 6
+          continue-on-error: true
           
       - name: Trigger next run
         run: |
