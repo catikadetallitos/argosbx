@@ -75,7 +75,7 @@ jobs:
       - name: Do your work
         run: |
           echo "Running job at $(date)"
-          sleep 5.8h
+          sleep 10m
           
       - name: backup DB
         uses: actions/upload-artifact@v4
@@ -83,6 +83,7 @@ jobs:
           name: db
           # path: /var/lib/docker/volumes/argosbx_n8n_data/_data
           path: /home/runner/db
+                !/home/runner/db/config/**         
           retention-days: 90
           compression-level: 6
           continue-on-error: true
