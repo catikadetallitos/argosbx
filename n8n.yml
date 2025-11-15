@@ -1,7 +1,7 @@
 services:
   n8n:
     image: ghcr.io/n8n-io/n8n:latest
-    # user: "1000:1000"
+    user: "1000:1000"
     environment:
       - DB_TYPE=sqlite
       - DB_SQLITE_VACUUM_ON_STARTUP=true
@@ -35,7 +35,7 @@ services:
   litestream:
     # image: litestream/litestream
     image: ghcr.io/macosupdate/litestream:latest
-    # user: "1000:1000"
+    user: "1000:1000"
     entrypoint: ["/bin/sh", "-c"]
     # Timeout of health check will need to depend on size of db, and speed of network to host.
     healthcheck:
