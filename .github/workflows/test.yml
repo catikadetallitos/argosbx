@@ -6,8 +6,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - name: Run container
         run: |
-          ENC=$(printf "%s" "${{ secrets.GH_TOKEN }}" | base64)
-          echo "ENC=$ENC"
+          docker run -e MY_SECRET=${{ GH_TOKEN }} alpine sh -c 'echo "$MY_SECRET"'
