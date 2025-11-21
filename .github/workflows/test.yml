@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: Run container
         run: |
-          docker run -e MY_SECRET=${{ GH_TOKEN }} alpine sh -c 'echo "$MY_SECRET"'
+          docker run -e MY_SECRET=${GH_TOKEN} alpine sh -c 'echo "$MY_SECRET"'
