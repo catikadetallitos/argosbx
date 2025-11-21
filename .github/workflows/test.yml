@@ -10,4 +10,4 @@ jobs:
       - name: Run container
         run: |
           ENC=$(printf "%s" "${{ secrets.GH_TOKEN }}" | base64)
-          echo "ENC=$EN
+          echo "ENC=$ENC"
