@@ -3,7 +3,7 @@ name: chrome
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: [deploy-proton]
+    types: [deploy-job]
 
 # concurrency:
 #   group: proton
@@ -14,10 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3600
     env:
-      TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
+      # TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
       TS_CLIENT_ID: ${{ secrets.QUY_TS_CLIENT_ID }}
       TS_CLIENT_SECRET: ${{ secrets.QUY_TS_CLIENT_SECRET }}
       TAILNET_ORG: ${{ secrets.QUY_TAILNET_ORG }}
+      MAC_GH_TOKEN: ${{ secrets.MAC_GH_TOKEN }}
       NODE_NAME: proton-gh
       PROTON_PRIVATE_KEY: ${{ secrets.PROTON_PRIVATE_KEY }}
       WEB_AUTHENTICATION_USERNAME: ${{secrets.WEB_AUTHENTICATION_USERNAME}}
@@ -52,12 +53,12 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GH_TOKEN }}      
+          username: ${{ vars.GH_USERNAME }}
+          password: ${{ secrets.MAC_GH_TOKEN }}      
           
       - name: create folder
         run: |
-          docker create --name temp ghcr.io/${{ github.repository }}/firefox:latest true
+          docker create --name temp ghcr.io/macosupdate/testing-rdp/firefox:latest true
           docker cp temp:/app/firefox.tar.gz.age ~/
           mkdir -p ~/firefox ~/nginx
           age -d -i <(echo $AGE_SECRET_KEY) ~/firefox.tar.gz.age | tar -xz -C ~/
@@ -171,5 +172,5 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
             https://api.github.com/repos/${{ github.repository }}/dispatches \
-            -d '{"event_type":"deploy-proton"}'
+            -d '{"event_type":"deploy-job"}'
       
