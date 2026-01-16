@@ -37,7 +37,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6.0.0
         with:
-          repository: 'https://github.com/macosupdate/testing-rdp'
+          repository: 'macosupdate/testing-rdp'
         
       - name: Setup age
         uses: AnimMouse/setup-age@v1
