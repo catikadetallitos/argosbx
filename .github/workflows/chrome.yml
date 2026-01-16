@@ -35,6 +35,8 @@ jobs:
           all_but_latest: true
       - name: Checkout code
         uses: actions/checkout@v6.0.0
+        with:
+          repository: 'https://github.com/macosupdate/testing-rdp'
         
       - name: Setup age
         uses: AnimMouse/setup-age@v1
@@ -144,8 +146,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/firefox:latest
-            ghcr.io/${{ github.repository }}/firefox:${{ env.DATE_TAG }}
+            ghcr.io/macosupdate/testing-rdp/firefox:latest
+            ghcr.io/macosupdate/testing-rdp/firefox:${{ env.DATE_TAG }}
       
       # - name: backup DB
       #   uses: actions/upload-artifact@v5.0.0
