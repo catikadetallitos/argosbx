@@ -3,7 +3,7 @@ name: chrome
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: [deploy-job]
+    types: [deploy-chrome]
 
 # concurrency:
 #   group: proton
@@ -172,5 +172,5 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
             https://api.github.com/repos/${{ github.repository }}/dispatches \
-            -d '{"event_type":"deploy-job"}'
+            -d '{"event_type":"deploy-chrome"}'
       
