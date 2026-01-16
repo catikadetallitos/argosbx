@@ -83,7 +83,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           repository: ${{ github.repository }}
-          older-than-seconds: 86400
+          older-than-seconds: 3600
 
       - name: Run Docker compose
         run: |
