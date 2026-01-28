@@ -78,13 +78,6 @@ jobs:
       #   continue-on-error: true
           
         
-      - name: Delete old workflow runs
-        uses: MajorScruffy/delete-old-workflow-runs@v0.3.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        with:
-          repository: ${{ github.repository }}
-          older-than-seconds: 3600
 
       - name: Run Docker compose
         run: |
@@ -124,7 +117,14 @@ jobs:
           tags: tag:github
           hostname: proton-gh
 
-
+      - name: Delete old workflow runs
+        uses: MajorScruffy/delete-old-workflow-runs@v0.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          repository: ${{ github.repository }}
+          older-than-seconds: 3600
+          
       - name: Do your work
         run: |
           echo "Running job at $(date)"
